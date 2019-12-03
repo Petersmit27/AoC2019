@@ -9,6 +9,4 @@ data class Coordinate(val x: Int, val y: Int) {
     }
 }
 
-data class Move(val direction: Direction, val amount: Int)
-
-enum class Direction { U, D, L, R }
+data class Move(val direction: Char, val amount: Int)

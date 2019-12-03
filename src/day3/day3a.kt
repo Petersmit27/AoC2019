@@ -1,31 +1,15 @@
 package day3
 
-import day3.Direction.*
 import java.io.File
-import kotlin.math.absoluteValue
 
 fun main() {
 
     val allMoves = File("./src/day3/input.txt").readText()
     val moves1 = allMoves.split("\n")[0].split(",").map {
-        Move(
-            when {
-                it.substring(0, 1) == "U" -> U
-                it.substring(0, 1) == "L" -> L
-                it.substring(0, 1) == "R" -> R
-                else -> D
-            }, it.substring(1).toInt()
-        )
+        Move(it[0], it.substring(1).toInt())
     }
     val moves2 = allMoves.split("\n")[1].split(",").map {
-        Move(
-            when {
-                it.substring(0, 1) == "U" -> U
-                it.substring(0, 1) == "L" -> L
-                it.substring(0, 1) == "R" -> R
-                else -> D
-            }, it.substring(1).toInt()
-        )
+        Move(it[0], it.substring(1).toInt())
     }
 
 
@@ -37,28 +21,28 @@ fun main() {
 
     moves1.forEach {
         when (it.direction) {
-            U -> {
+            'U' -> {
                 for (i in 1..it.amount) {
                     newCoordinate = Coordinate(lastCoordinate.x, lastCoordinate.y + i)
                     geweesteCoordinaten.add(newCoordinate)
                 }
                 lastCoordinate = newCoordinate
             }
-            R -> {
+            'R' -> {
                 for (i in 1..it.amount) {
                     newCoordinate = Coordinate(lastCoordinate.x + i, lastCoordinate.y)
                     geweesteCoordinaten.add(newCoordinate)
                 }
                 lastCoordinate = newCoordinate
             }
-            D -> {
+            'D' -> {
                 for (i in 1..it.amount) {
                     newCoordinate = Coordinate(lastCoordinate.x, lastCoordinate.y - i)
                     geweesteCoordinaten.add(newCoordinate)
                 }
                 lastCoordinate = newCoordinate
             }
-            L -> {
+            'L' -> {
                 for (i in 1..it.amount) {
                     newCoordinate = Coordinate(lastCoordinate.x - i, lastCoordinate.y)
                     geweesteCoordinaten.add(newCoordinate)
@@ -72,7 +56,7 @@ fun main() {
 
     moves2.forEach {
         when (it.direction) {
-            U -> {
+            'U' -> {
                 for (i in 1..it.amount) {
                     newCoordinate = Coordinate(lastCoordinate.x, lastCoordinate.y + i)
                     if (geweesteCoordinaten.contains(newCoordinate)) {
@@ -81,7 +65,7 @@ fun main() {
                 }
                 lastCoordinate = newCoordinate
             }
-            R -> {
+            'R' -> {
                 for (i in 1..it.amount) {
                     newCoordinate = Coordinate(lastCoordinate.x + i, lastCoordinate.y)
                     if (geweesteCoordinaten.contains(newCoordinate)) {
@@ -90,7 +74,7 @@ fun main() {
                 }
                 lastCoordinate = newCoordinate
             }
-            D -> {
+            'D' -> {
                 for (i in 1..it.amount) {
                     newCoordinate = Coordinate(lastCoordinate.x, lastCoordinate.y - i)
                     if (geweesteCoordinaten.contains(newCoordinate)) {
@@ -99,7 +83,7 @@ fun main() {
                 }
                 lastCoordinate = newCoordinate
             }
-            L -> {
+            'L' -> {
                 for (i in 1..it.amount) {
                     newCoordinate = Coordinate(lastCoordinate.x - i, lastCoordinate.y)
                     if (geweesteCoordinaten.contains(newCoordinate)) {
@@ -110,7 +94,6 @@ fun main() {
             }
         }
     }
-
 
     println(intersections.map { it.getDistance() }.min())
 }

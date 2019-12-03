@@ -2,31 +2,16 @@
 
 package day3
 
-import day3.Direction.*
 import java.io.File
 
 fun main() {
 
     val allMoves = File("./src/day3/input.txt").readText()
     val moves1 = allMoves.split("\n")[0].split(",").map {
-        Move(
-            when {
-                it.substring(0, 1) == "U" -> U
-                it.substring(0, 1) == "L" -> L
-                it.substring(0, 1) == "R" -> R
-                else -> D
-            }, it.substring(1).toInt()
-        )
+        Move(it[0], it.substring(1).toInt())
     }
     val moves2 = allMoves.split("\n")[1].split(",").map {
-        Move(
-            when {
-                it.substring(0, 1) == "U" -> U
-                it.substring(0, 1) == "L" -> L
-                it.substring(0, 1) == "R" -> R
-                else -> D
-            }, it.substring(1).toInt()
-        )
+        Move(it[0], it.substring(1).toInt())
     }
 
 
@@ -39,28 +24,28 @@ fun main() {
 
     moves1.forEach {
         when (it.direction) {
-            U -> {
+            'U' -> {
                 for (i in 1..it.amount) {
                     newCoordinate = Coordinate(lastCoordinate.x, lastCoordinate.y + i)
                     geweesteCoordinaten1.add(newCoordinate)
                 }
                 lastCoordinate = newCoordinate
             }
-            R -> {
+            'R' -> {
                 for (i in 1..it.amount) {
                     newCoordinate = Coordinate(lastCoordinate.x + i, lastCoordinate.y)
                     geweesteCoordinaten1.add(newCoordinate)
                 }
                 lastCoordinate = newCoordinate
             }
-            D -> {
+            'D' -> {
                 for (i in 1..it.amount) {
                     newCoordinate = Coordinate(lastCoordinate.x, lastCoordinate.y - i)
                     geweesteCoordinaten1.add(newCoordinate)
                 }
                 lastCoordinate = newCoordinate
             }
-            L -> {
+            'L' -> {
                 for (i in 1..it.amount) {
                     newCoordinate = Coordinate(lastCoordinate.x - i, lastCoordinate.y)
                     geweesteCoordinaten1.add(newCoordinate)
@@ -74,7 +59,7 @@ fun main() {
 
     moves2.forEach {
         when (it.direction) {
-            U -> {
+            'U' -> {
                 for (i in 1..it.amount) {
                     newCoordinate = Coordinate(lastCoordinate.x, lastCoordinate.y + i)
                     if (geweesteCoordinaten1.contains(newCoordinate)) {
@@ -84,7 +69,7 @@ fun main() {
                 }
                 lastCoordinate = newCoordinate
             }
-            R -> {
+            'R' -> {
                 for (i in 1..it.amount) {
                     newCoordinate = Coordinate(lastCoordinate.x + i, lastCoordinate.y)
                     if (geweesteCoordinaten1.contains(newCoordinate)) {
@@ -94,7 +79,7 @@ fun main() {
                 }
                 lastCoordinate = newCoordinate
             }
-            D -> {
+            'D' -> {
                 for (i in 1..it.amount) {
                     newCoordinate = Coordinate(lastCoordinate.x, lastCoordinate.y - i)
                     if (geweesteCoordinaten1.contains(newCoordinate)) {
@@ -104,7 +89,7 @@ fun main() {
                 }
                 lastCoordinate = newCoordinate
             }
-            L -> {
+            'L' -> {
                 for (i in 1..it.amount) {
                     newCoordinate = Coordinate(lastCoordinate.x - i, lastCoordinate.y)
                     if (geweesteCoordinaten1.contains(newCoordinate)) {
@@ -122,13 +107,18 @@ fun main() {
 
 
     intersections.forEach {
-        combinedSteps.add(determineStepsToIntersection(geweesteCoordinaten1, it) + determineStepsToIntersection(geweesteCoordinaten2, it)+2)//+2??????? it just works
+        combinedSteps.add(
+            determineStepsToIntersection(geweesteCoordinaten1, it)
+                    + determineStepsToIntersection(geweesteCoordinaten2, it)
+                    + 2
+        )//+2 (eerste of laatse stappen nog niet geinclude)
     }
 
     combinedSteps.forEach { println(it) }
     println(combinedSteps.min())
 }
-fun determineStepsToIntersection(geweest: List<Coordinate>, intersection: Coordinate):Int {
+
+fun determineStepsToIntersection(geweest: List<Coordinate>, intersection: Coordinate): Int {
     for (i in 0..geweest.size) {
         if (geweest[i] == intersection) {
             return i
