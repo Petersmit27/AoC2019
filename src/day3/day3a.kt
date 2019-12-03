@@ -1,3 +1,5 @@
+@file:Suppress("DuplicatedCode")
+
 package day3
 
 import java.io.File
