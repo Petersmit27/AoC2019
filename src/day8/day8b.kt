@@ -27,15 +27,8 @@ fun main() {
     } catch (e: IndexOutOfBoundsException) {
     }
 
-    //Fill the final image with transparent characters
-    val image = ArrayList<ArrayList<Char>>()
-    for (i in 0 until HEIGHT) {
-        val row = ArrayList<Char>()
-        for (j in 0 until WIDTH) {
-            row.add(' ')
-        }
-        image.add(row)
-    }
+    //fill the final image with transparent characters (spaces)
+    val image = Array(HEIGHT) { Array(WIDTH) { ' ' } }
 
     //fill in the final image
     for (layer in layers) {
@@ -52,7 +45,7 @@ fun main() {
     }
 
     for (row in image) {
-        print(row)
+        print(row.asList())
         println()
     }
 }
