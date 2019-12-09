@@ -3,10 +3,9 @@
 package day5
 
 import java.io.File
-import java.lang.Exception
 
 
-const val input = 5
+private const val input = 5
 
 fun main() {
 
